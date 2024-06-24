@@ -5,13 +5,19 @@
 using namespace std;
 using namespace boost::multiprecision;
 
+cpp_int getRandomR(cpp_int &n){
+    boost::random::mt19937 gen(static_cast<unsigned int>(time(nullptr)));
+    boost::random::uniform_int_distribution<cpp_int> dist(3,n-1);
+    return dist(gen);
+}
+
 cpp_int modInv(cpp_int a,cpp_int m){
     cpp_int m0 = m;
     cpp_int y=0,x=1;
 
     if(m==1) return 0;
 
-    if(a>1){
+    while(a>1){
         cpp_int q = a/m;
         cpp_int t = m;
 
@@ -48,5 +54,29 @@ cpp_int Egcd(cpp_int a,cpp_int b){
 }
 
 int main(){
+    cpp_int p,q,e,d,phi,n;
+    p = 17;
+    q = 13;
+
+    n = p*q;
+    phi = (p-1)*(q-1);
+
+    e = getRandomR(phi);
+    while(Egcd(phi,e)!=1){
+        e = getRandomR(phi);
+    }
+
+    d = modInv(e,phi);
+
+    cpp_int m = 10;
+
+    cpp_int enc,dec;
+
+    enc = power(m,e,n);
+
+    dec = power(enc,d,n);
+
+    cout<<enc<<endl<<dec<<endl;
+
 
 }
