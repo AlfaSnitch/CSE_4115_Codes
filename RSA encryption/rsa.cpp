@@ -15,7 +15,7 @@ cpp_int modInv(cpp_int A, cpp_int M){
     cpp_int m0 = M;
     cpp_int y=0,x=1;
 
-    if(M==0) return 0;
+    if(M==1) return 0;
 
     while(A>1){
         cpp_int t=M;
